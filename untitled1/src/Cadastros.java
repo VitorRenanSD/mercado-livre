@@ -14,10 +14,5 @@ public class Cadastros {
        produtos.add(cadastraproduto);
         System.out.println(cadastraproduto);
     }
-
-    public void RemoverProduto(String removeproduto){
-        produtos.remove(removeproduto);
-        System.out.println(removeproduto);
-    }
 }
 
