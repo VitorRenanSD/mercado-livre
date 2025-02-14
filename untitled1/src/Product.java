@@ -1,5 +1,5 @@
 import com.sun.jdi.connect.Connector;
-
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -8,12 +8,12 @@ public class ConexaoDB {
     private String usuario;
     private String senha;
 
-    ConexaoDB(){
+    public ConexaoDB conectar(){
         url = "jdbc:postgresql://localhost:5432/MercadoFake";
         usuario = "postgres";
         senha = "password";
 
-        ConexaoDB conectado;
+        Connection conectado = null;
 
         try {
             conectado = DriverManager.getConnection(url, usuario, senha);
@@ -23,4 +23,9 @@ public class ConexaoDB {
         }
         return conectado;
     }
+
+    public void Desconectar(Connection connection) throws SQLException {
+        connection.close();
+    }
 }
+
