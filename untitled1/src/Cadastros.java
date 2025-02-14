@@ -1,21 +1,12 @@
-import java.util.ArrayList;
-import java.util.List;
+public class Cadastro {
 
-public class Cadastros {
-    String usuario;
-    String cadastraproduto;
 
-    Cadastros(){
-        
+    public void AdicionaUser(){
+        String sql = "INSERT INTO cad_usuarios(username, cpf_cnpj, endereco, email, senha) VALUES  (?, ?, ?, ?, ?)";
+
     }
 
-    public void CadastraUser(String usuario){
-        usuario = "Informe o nome do usuário(colunas) values(?)"
-      
-    }
-
-    public void CadastroProduto(String cadastraproduto){
-       insert
+    public  void  AdicionarProduto(){
+        String sql = "INSERT INTO produtos(nome, descricao, preco_venda, estoque, caminho_imagem, usado) (?, ?, ?, ?, ?, ?)";
     }
 }
-
