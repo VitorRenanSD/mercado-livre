@@ -2,17 +2,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cadastros {
-    private List<String> usuarios = new ArrayList<>();
-    private List<String> produtos = new ArrayList<>();
+    String usuario;
+    String cadastraproduto;
+
+    Cadastros(){
+        
+    }
 
     public void CadastraUser(String usuario){
-      usuarios.add(usuario);
-        System.out.println(usuario);
+        usuario = "Informe o nome do usuário(colunas) values(?)"
+      
     }
 
     public void CadastroProduto(String cadastraproduto){
-       produtos.add(cadastraproduto);
-        System.out.println(cadastraproduto);
+       insert
     }
 }
 
