@@ -9,6 +9,4 @@ public class Cadastro {
         String sql = "INSERT INTO produtos(nome, descricao, preco_venda, estoque, caminho_imagem, usado) ("Nootebok Deel", "Notebook Del Inspirion 15"  8GB RAMM 256 SSD,
              "3.500,00", "imagens/notebook_dell.jpg", "False");
     }
-
-    
 }
