@@ -6,15 +6,17 @@ import java.sql.SQLException;
 
 public class Cadastros {
 
-    public boolean existeUsuarioCampo(String cnpf_cnpj,String email) {
-        String sql = "SELECT COUNT(*) FROM cad_usuarios WHERE cpf_cnpj = ? OR email = ?";
+    public boolean existeUsuarioCampo(int id, String username, String cnpf_cnpj, String endereco, String email, String senha) {
+        String sql = "SELECT COUNT(*) FROM cad_usuarios WHERE  username = ? OR  cpf_cnpj = ? OR endereco = ? OR email = ? OR senha = ?";
 
         try (Connection connection = new ConnectionDB().getConnection();
              PreparedStatement pstm = connection.prepareStatement(sql)) {
 
-            pstm.setString(1, cnpf_cnpj);
-            pstm.setString(2, email);
-
+            pstm.setString(1, username);
+            pstm.setString(2, cnpf_cnpj);
+            pstm.setString(3, endereco);
+            pstm.setString(4, email);
+            pstm.setString(5, senha);
 
             ResultSet resultset = pstm.executeQuery();
 
@@ -35,8 +37,8 @@ public class Cadastros {
 
             pstm.setString(1, nome);
             pstm.setString(2, descricao);
-            pstm.setString(3, String.valueOf(preco_venda));
-            pstm.setString(4, String.valueOf(estoque));
+            pstm.setFloat(3,preco_venda);
+            pstm.setInt(4, estoque);
             pstm.setString(5, caminho_imagem);
 
             ResultSet resultSet = pstm.executeQuery();
@@ -50,15 +52,18 @@ public class Cadastros {
         return false;
     }
 
-    public boolean existeCampVend(int fk_produto, int fk_usuario, String texto) {
-        String sql = "SELECT FROM avaliacoes WHERE fk_produto = ? AND fk_usuario = ? AND texto = ?";
+    public boolean existeCampVend(int fk_usuario, int fk_produto, int quantidade, int fk_fr_pgto, boolean cancelado, String motivo_cancelamento ) {
+        String sql = "SELECT COUNT(*) FROM vendas WHERE fk_produto = ? OR fk_user = ? OR quantidade = ? OR fk_frm_pgto = ? OR cancelado = ? OR motivo_cancel = ?";
 
         try (Connection connection = new ConnectionDB().getConnection();
              PreparedStatement pstm = connection.prepareStatement(sql)) {
 
-            pstm.setString(1, String.valueOf(fk_produto));
-            pstm.setString(2, String.valueOf(fk_produto));
-            pstm.setString(5, texto);
+            pstm.setInt(1, fk_usuario);
+            pstm.setInt(2, fk_produto );
+            pstm.setInt(3, quantidade);
+            pstm.setInt(4, fk_fr_pgto);
+            pstm.setBoolean(5,cancelado);
+            pstm.setString(6,motivo_cancelamento);
 
             ResultSet resultSet = pstm.executeQuery();
 
