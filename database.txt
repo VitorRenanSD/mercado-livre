@@ -19,7 +19,11 @@ CREATE TABLE forma_pgto (
 );
 
 CREATE TABLE estoque (
-
+	id INT SERIAL PRIMARY KEY,
+    fk_produto INT NOTNULL,
+    quantidade INT NOTNULL,
+    modelo VARCHAR(80),
+    caminho_imagem VARCHAR(150)
 );
 
 CREATE TABLE produto (
@@ -36,4 +40,14 @@ CREATE TABLE avaliacao (
     fk_usuario INT NOTNULL,
     nota_produto INT NOTNULL,
     texto VARCHAR(160)
+);
+
+CREATE TABLE frete (
+	id INT SERIAL PRIMARY KEY,
+    
+);
+
+CREATE TABLE venda (
+	id INT SERIAL PRIMARY KEY,
+    
 );
