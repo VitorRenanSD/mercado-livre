@@ -11,7 +11,8 @@ public class Main {
         String senha = "senha23";
 
         System.out.println("Verificando se o usuário já existe...");
-        boolean usuarioExiste = cadastros.existeUsuarioCampo(cpf_cnpj, email);
+        boolean usuarioExiste = cadastros.existeUsuarioCampo(1, username, cpf_cnpj,endereco,
+                email, senha);
 
         if (usuarioExiste) {
             System.out.println("Usuário já existe no banco de dados.");
@@ -19,8 +20,40 @@ public class Main {
             System.out.println("Usuário não encontrado no banco de dados.");
         }
 
-        System.out.println("Tentando adicionar um novo usuário...");
-        cadastros.adicionaUsuario(username, cpf_cnpj, endereco, email, senha);
+        String nome = "Notebook Dell";
+        String descricao = "Notebook Dell Inspiron 15, 8GB RAM, 256GB SSD";
+        float preco_venda = 3500f;
+        int estoque = 10;
+        String imagem_caminho = "imagens/notebook_dell.jpg";
+        boolean usado = false;
+
+        System.out.println("Verificando se o produto já existe...");
+        boolean produtoExiste = cadastros.existeProductCamp(nome,descricao, preco_venda, estoque, imagem_caminho);
+
+        if (produtoExiste) {
+            System.out.println("Produto já existe no banco de dados.");
+        } else {
+            System.out.println("Produto não encontrado no banco de dados.");
+        }
+
+        int fk_usuario = 2;
+        int fk_produto = 2;
+        int quantidade = 1;
+        int fk_frm_pgto = 3;
+        boolean cancelado = true;
+        String motivo_cancelamento = "Produto indisponivel";
+
+        System.out.println("Verificando se a venda já existe...");
+        boolean vendaExiste = cadastros.existeCampVend(fk_usuario, fk_produto, quantidade, fk_frm_pgto, cancelado,
+                motivo_cancelamento);
+
+        if (vendaExiste) {
+            System.out.println("Venda já existe no banco de dados.");
+        } else {
+            System.out.println("Venda não encontrada no banco de dados.");
+        }
+
+
 
         RepositorioUsuario repositorioUsuario = new RepositorioUsuario();
         Usuario usuario = repositorioUsuario.getById(1);
@@ -66,5 +99,3 @@ public class Main {
         }
     }
 }
-
-
