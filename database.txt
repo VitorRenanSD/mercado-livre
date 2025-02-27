@@ -15,7 +15,7 @@ CREATE TABLE forma_pgto (
     nome_forma VARCHAR(20) NOT NULL,
     quant_parcelas INT NOT NULL CHECK (quant_parcelas > 0),
     perc_juros DECIMAL(10, 3) NOT NULL,
-    inativo BOOLEAN
+    inativo BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE produto (
@@ -36,29 +36,35 @@ CREATE TABLE estoque (
 
 CREATE TABLE avaliacao (
 	id SERIAL PRIMARY KEY,
-    fk_produto INT NOT NULL REFERENCES produto(id),
-    fk_usuario INT NOT NULL REFERENCES usuario(id),
+    fk_produto INT UNIQUE NOT NULL REFERENCES produto(id),
+    fk_usuario INT UNIQUE NOT NULL REFERENCES usuario(id),
     nota_produto INT NOT NULL CHECK (nota_produto BETWEEN 1 AND 5),
     texto VARCHAR(160)
 );
 
+CREATE TABLE venda (
+    id SERIAL PRIMARY KEY,
+    fk_usuario INT NOT NULL REFERENCES usuario(id),
+    fk_forma_pgto INT NOT NULL REFERENCES forma_pgto(id),
+    dt_venda TIMESTAMP NOT NULL,
+    valor_total DECIMAL(10, 2) NOT NULL
+);
+
 CREATE TABLE itens_venda (
-	id INT SERIAL PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
+    fk_venda INT NOT NULL REFERENCES venda(id),
     fk_produto INT NOT NULL REFERENCES produto(id),
     fk_estoque INT NOT NULL REFERENCES estoque(id),
     preco_unit DECIMAL(15, 2) NOT NULL,
     quantidade INT NOT NULL,
-	subtotal DECIMAL(15, 2) GENERATED ALWAYS AS (preco_unitario * quantidade) STORED
-    
+	subtotal DECIMAL(15, 2) NOT NULL
 );
 
 CREATE TABLE frete (
-	id INT SERIAL PRIMARY KEY,
-    
+    id SERIAL PRIMARY KEY,
+    fk_venda INT NOT NULL REFERENCES venda(id),
+    valor DECIMAL(10, 2) NOT NULL,
+    prazo_entrega INT NOT NULL CHECK (prazo_entrega > 0),
+    transportadora VARCHAR(50) NOT NULL,
+    status VARCHAR(20) DEFAULT 'pendente'
 );
-
-CREATE TABLE venda (
-	id INT SERIAL PRIMARY KEY,
-    
-);
-
