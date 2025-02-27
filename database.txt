@@ -3,43 +3,43 @@
 
 CREATE TABLE usuario (
 	id INT SERIAL PRIMARY KEY,
-    	nome_completo VARCHAR(60) NOTNULL,
-    	cpf_cnpj VARCHAR(14) UNIQUE NOTNULL,
+    nome_completo VARCHAR(60) NOTNULL,
+    cpf_cnpj VARCHAR(14) UNIQUE NOTNULL,
 	email VARCHAR(60) UNIQUE NOTNULL,
-    	senha VARCHAR(30) NOTNULL,
-	endereco VARCHAR(100) NOTNULL
+    senha VARCHAR(30) NOTNULL,
+    endereco VARCHAR(100) NOTNULL
 );
 
 CREATE TABLE forma_pgto (
 	id INT SERIAL PRIMARY KEY,
-	nome_forma VARCHAR(20) NOTNULL,
-	quant_parcelas INT NOTNULL CHECK (quant_parcelas > 0),
-	perc_juros DECIMAL NOTNULL,
-	inativo BOOLEAN
+    nome_forma VARCHAR(20) NOTNULL,
+    quant_parcelas INT NOTNULL CHECK (quant_parcelas > 0),
+    perc_juros DECIMAL NOTNULL,
+    inativo BOOLEAN
 );
 
 CREATE TABLE estoque (
 	id INT SERIAL PRIMARY KEY,
-	fk_produto INT NOTNULL REFERENCES produto(id),
-	quantidade INT NOTNULL CHECK (quantidade >= 0),
-	modelo VARCHAR(80),
-	caminho_imagem VARCHAR(150)
+    fk_produto INT NOTNULL REFERENCES produto(id),
+    quantidade INT NOTNULL CHECK (quantidade >= 0),
+    modelo VARCHAR(80),
+    caminho_imagem VARCHAR(150)
 );
 
 CREATE TABLE produto (
 	id INT SERIAL PRIMARY KEY,
-    	nome_produto VARCHAR(50) NOTNULL,
-    	descricao VARCHAR(160),
-    	preco DECIMAL NOTNULL,
+    nome_produto VARCHAR(50) NOTNULL,
+    descricao VARCHAR(160),
+    preco DECIMAL NOTNULL,
 	usado BOOLEAN NOTNULL
 );
 
 CREATE TABLE avaliacao (
 	id INT SERIAL PRIMARY KEY,
-	fk_produto INT NOTNULL REFERENCES produto(id),
-    	fk_usuario INT NOTNULL REFERENCES usuario(id),
-    	nota_produto INT NOTNULL CHECK (nota_produto BETWEEN 1 AND 5),
-    	texto VARCHAR(160)
+    fk_produto INT NOTNULL REFERENCES produto(id),
+    fk_usuario INT NOTNULL REFERENCES usuario(id),
+    nota_produto INT NOTNULL CHECK (nota_produto BETWEEN 1 AND 5),
+    texto VARCHAR(160)
 );
 
 CREATE TABLE frete (
@@ -47,7 +47,18 @@ CREATE TABLE frete (
     
 );
 
+CREATE TABLE itens_venda (
+	id INT SERIAL PRIMARY KEY,
+    fk_produto INT NOTNULL REFERENCES produto(id),
+    fk_estoque INT NOTNULL REFERENCES estoque(id),
+    preco_unit DECIMAL NOTNULL,
+    quantidade INT NOTNULL,
+
+    
+);
+
 CREATE TABLE venda (
 	id INT SERIAL PRIMARY KEY,
     
 );
+
