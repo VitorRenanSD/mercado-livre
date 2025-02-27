@@ -1,4 +1,4 @@
--- Aqui estão todas as QUERYS necessárias para criar a base de dados, rodar este .txt para criar as tabelas necessárias
+-- Aqui estão todas as QUERYS necessárias para criar a base de dados, rodar este .txt para criar as tabelas do nosso sistema
 -- NOTA: Neste projeto utilizamos PostgreSQL, a sintaxe pode ser levemente diferente de outras database como MySQL e SQL Server
 
 CREATE TABLE usuario (
