@@ -2,58 +2,58 @@
 -- NOTA: Neste projeto utilizamos PostgreSQL, a sintaxe pode ser levemente diferente de outras database como MySQL e SQL Server
 
 CREATE TABLE usuario (
-	id INT SERIAL PRIMARY KEY,
-    nome_completo VARCHAR(60) NOTNULL,
-    cpf_cnpj VARCHAR(14) UNIQUE NOTNULL,
-	email VARCHAR(60) UNIQUE NOTNULL,
-    senha VARCHAR(30) NOTNULL,
-    endereco VARCHAR(100) NOTNULL
+	id SERIAL PRIMARY KEY,
+    nome_completo VARCHAR(60) NOT NULL,
+    cpf_cnpj VARCHAR(14) UNIQUE NOT NULL,
+	email VARCHAR(60) UNIQUE NOT NULL,
+    senha VARCHAR(30) NOT NULL,
+    endereco VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE forma_pgto (
-	id INT SERIAL PRIMARY KEY,
-    nome_forma VARCHAR(20) NOTNULL,
-    quant_parcelas INT NOTNULL CHECK (quant_parcelas > 0),
-    perc_juros DECIMAL NOTNULL,
+	id SERIAL PRIMARY KEY,
+    nome_forma VARCHAR(20) NOT NULL,
+    quant_parcelas INT NOT NULL CHECK (quant_parcelas > 0),
+    perc_juros DECIMAL(10, 3) NOT NULL,
     inativo BOOLEAN
 );
 
+CREATE TABLE produto (
+	id SERIAL PRIMARY KEY,
+    nome_produto VARCHAR(50) NOT NULL,
+    descricao VARCHAR(160),
+    preco DECIMAL(15, 2) NOT NULL,
+	usado BOOLEAN NOT NULL
+);
+
 CREATE TABLE estoque (
-	id INT SERIAL PRIMARY KEY,
-    fk_produto INT NOTNULL REFERENCES produto(id),
-    quantidade INT NOTNULL CHECK (quantidade >= 0),
+	id SERIAL PRIMARY KEY,
+    fk_produto INT NOT NULL REFERENCES produto(id),
+    quantidade INT NOT NULL CHECK (quantidade >= 0),
     modelo VARCHAR(80),
     caminho_imagem VARCHAR(150)
 );
 
-CREATE TABLE produto (
-	id INT SERIAL PRIMARY KEY,
-    nome_produto VARCHAR(50) NOTNULL,
-    descricao VARCHAR(160),
-    preco DECIMAL NOTNULL,
-	usado BOOLEAN NOTNULL
-);
-
 CREATE TABLE avaliacao (
-	id INT SERIAL PRIMARY KEY,
-    fk_produto INT NOTNULL REFERENCES produto(id),
-    fk_usuario INT NOTNULL REFERENCES usuario(id),
-    nota_produto INT NOTNULL CHECK (nota_produto BETWEEN 1 AND 5),
+	id SERIAL PRIMARY KEY,
+    fk_produto INT NOT NULL REFERENCES produto(id),
+    fk_usuario INT NOT NULL REFERENCES usuario(id),
+    nota_produto INT NOT NULL CHECK (nota_produto BETWEEN 1 AND 5),
     texto VARCHAR(160)
-);
-
-CREATE TABLE frete (
-	id INT SERIAL PRIMARY KEY,
-    
 );
 
 CREATE TABLE itens_venda (
 	id INT SERIAL PRIMARY KEY,
-    fk_produto INT NOTNULL REFERENCES produto(id),
-    fk_estoque INT NOTNULL REFERENCES estoque(id),
-    preco_unit DECIMAL NOTNULL,
-    quantidade INT NOTNULL,
+    fk_produto INT NOT NULL REFERENCES produto(id),
+    fk_estoque INT NOT NULL REFERENCES estoque(id),
+    preco_unit DECIMAL(15, 2) NOT NULL,
+    quantidade INT NOT NULL,
+	subtotal DECIMAL(15, 2) GENERATED ALWAYS AS (preco_unitario * quantidade) STORED
+    
+);
 
+CREATE TABLE frete (
+	id INT SERIAL PRIMARY KEY,
     
 );
 
