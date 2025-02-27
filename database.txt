@@ -13,15 +13,15 @@ CREATE TABLE usuario (
 CREATE TABLE forma_pgto (
 	id INT SERIAL PRIMARY KEY,
     nome_forma VARCHAR(20) NOTNULL,
-    quant_parcelas INT NOTNULL,
+    quant_parcelas INT NOTNULL CHECK (quant_parcelas > 0),
     perc_juros DECIMAL NOTNULL,
     inativo BOOLEAN
 );
 
 CREATE TABLE estoque (
 	id INT SERIAL PRIMARY KEY,
-    fk_produto INT NOTNULL,
-    quantidade INT NOTNULL,
+    fk_produto INT NOTNULL REFERENCES produto(id),
+    quantidade INT NOTNULL CHECK (quantidade >= 0),
     modelo VARCHAR(80),
     caminho_imagem VARCHAR(150)
 );
@@ -36,9 +36,9 @@ CREATE TABLE produto (
 
 CREATE TABLE avaliacao (
 	id INT SERIAL PRIMARY KEY,
-    fk_produto INT NOTNULL,
-    fk_usuario INT NOTNULL,
-    nota_produto INT NOTNULL,
+    fk_produto INT NOTNULL REFERENCES produto(id),
+    fk_usuario INT NOTNULL REFERENCES usuario(id),
+    nota_produto INT NOTNULL CHECK (nota_produto BETWEEN 1 AND 5),
     texto VARCHAR(160)
 );
 
