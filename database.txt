@@ -1,5 +1,5 @@
-## Aqui estão todas as QUERYS necessárias para criar a base de dados, rodar este .txt para criar as tabelas necessárias
-## NOTA: Neste projeto utilizamos PostgreSQL, a sintaxe pode ser levemente diferente de outras database como MySQL e SQL Server
+-- Aqui estão todas as QUERYS necessárias para criar a base de dados, rodar este .txt para criar as tabelas necessárias
+-- NOTA: Neste projeto utilizamos PostgreSQL, a sintaxe pode ser levemente diferente de outras database como MySQL e SQL Server
 
 CREATE TABLE usuario (
 	id INT SERIAL PRIMARY KEY,
@@ -12,12 +12,28 @@ CREATE TABLE usuario (
 
 CREATE TABLE forma_pgto (
 	id INT SERIAL PRIMARY KEY,
-    nome VARCHAR(20) NOTNULL,
+    nome_forma VARCHAR(20) NOTNULL,
     quant_parcelas INT NOTNULL,
-    perc_juros DOUBLE NOTNULL,
+    perc_juros DECIMAL NOTNULL,
     inativo BOOLEAN
+);
+
+CREATE TABLE estoque (
+
+);
+
+CREATE TABLE produto (
+	id INT SERIAL PRIMARY KEY,
+    nome_produto VARCHAR(50) NOTNULL,
+    descricao VARCHAR(160),
+    preco DECIMAL NOTNULL,
+	usado BOOLEAN NOTNULL
 );
 
 CREATE TABLE avaliacao (
 	id INT SERIAL PRIMARY KEY,
+    fk_produto INT NOTNULL,
+    fk_usuario INT NOTNULL,
+    nota_produto INT NOTNULL,
+    texto VARCHAR(160)
 );
