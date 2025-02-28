@@ -10,7 +10,7 @@ public class ConnectionDB {
             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/MercadoFake",
                     "postgres", "password");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(ex.getMessage());
         }
         return connection;
     }
