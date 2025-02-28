@@ -14,7 +14,7 @@ public class ServicoUsuario {
     }
 
     public void cadastrarUsuario(String username, String cpf_cnpj, String endereco, String email, String senha) {
-        String sql = "INSERT INTO usuario (username, cpf_cnpj, endereco, email, senha) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO usuario (nome_completo, cpf_cnpj, endereco, email, senha) VALUES (?, ?, ?, ?, ?)";
 
         // Criptografa a senha antes de salvar
         String senhaCriptografada = gerenciaSenha.criptografarSenha(senha);
@@ -31,9 +31,9 @@ public class ServicoUsuario {
             int linhaAfet = pstm.executeUpdate();
 
             if (linhaAfet > 0) {
-                System.out.println("Usuario cadastrado com exito");
+                System.out.println("classes.Usuario cadastrado com exito");
             } else {
-                System.out.println("Usuario não cadastrado");
+                System.out.println("classes.Usuario não cadastrado");
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -57,11 +57,11 @@ public class ServicoUsuario {
             pstm.setString(6, username);
 
             int linhaAfet = pstm.executeUpdate();
-            
+
             if (linhaAfet > 0) {
-                System.out.println("Usuario atualizado");
+                System.out.println("classes.Usuario atualizado");
             } else {
-                System.out.println("Usuario não foi atualizado, verifique as informações");
+                System.out.println("classes.Usuario não foi atualizado, verifique as informações");
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -69,13 +69,13 @@ public class ServicoUsuario {
     }
 
     // Busca o hash da senha do banco para o username fornecido e compara usando a fun verificarSenha() de Bcrypt
-    public boolean autenticarUsuario(String username, String senha) {
-        String sql = "SELECT senha FROM usuario WHERE username = ?";
+    public boolean autenticarUsuario(String email, String senha) {
+        String sql = "SELECT senha FROM usuario WHERE email = ?";
 
         try (Connection connection = new ConnectionDB().getConnection();
              PreparedStatement pstm = connection.prepareStatement(sql)) {
 
-            pstm.setString(1, username);
+            pstm.setString(1, email);
             java.sql.ResultSet rs = pstm.executeQuery();
 
             if (rs.next()) {
